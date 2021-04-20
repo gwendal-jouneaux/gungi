@@ -5,6 +5,7 @@ function createRTC(receiveMessage, callback) {
     dc1 = pc1.createDataChannel('test', {
         reliable: true
     })
+    console.log("set dc1 as activedc")
     activedc = dc1
     dc1.onopen = function (e) { }
     dc1.onmessage = receiveMessage
@@ -60,7 +61,8 @@ var cfg = {
 
 var pc1 = new RTCPeerConnection(cfg, con),
     dc1 = null,
-    activedc = false;
+    tn1 = null,
+    activedc, pc1icedone = false;
 
 var sdpConstraints = {
     optional: [],
@@ -74,9 +76,11 @@ pc1.onicecandidate = function (e) {
 }
 
 var pc2 = new RTCPeerConnection(cfg, con),
-    dc2 = null;
+    dc2 = null,
+    pc2icedone = false;
 
 pc2.ondatachannel = function (e) {
+    console.log("set dc2 as activedc")
     var datachannel = e.channel || e;
     dc2 = datachannel
     activedc = dc2

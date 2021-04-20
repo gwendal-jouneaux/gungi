@@ -13,6 +13,17 @@ function receiveMessage(e){
                 displayColorChoice()
             }
             break;
+
+        case "COLOR":
+            other.color = data.color
+            updateColorChoice()
+            break;
+    
+        case "READY":
+            you.color = data.color
+            color.style.display = "none";
+            game.style.display = "flex";
+            break;
     
         default:
             break;
@@ -29,6 +40,8 @@ window.onload = function (){
             username.style.display = "block";
             you.server = true;
             you.client = false;
+            other.server = false;
+            other.client = true;
         });
         connectInfos.innerHTML = "Connecting ...";
     }
@@ -40,7 +53,9 @@ window.onload = function (){
             connectInfos.innerHTML = "Connected";
             connect.style.display = "none";
             username.style.display = "block";
-            you.sever = false;
+            other.server = true;
+            other.client = false;
+            you.server = false;
             you.client = true;
         });
         connectInfos.innerHTML = "Connecting ...";
@@ -86,7 +101,7 @@ window.onload = function (){
         data.color = other.color;
         sendJSON(data);
         color.style.display = "none";
-        game.style.display = "block";
+        game.style.display = "flex";
     }
 }
 
@@ -94,6 +109,7 @@ function displayColorChoice(){
     username.style.display = "none";
     color.style.display = "block";
     colorValidationBtn.disabled = you.server;
+    updateColorChoice()
 }
 
 function updateColorChoice(){
