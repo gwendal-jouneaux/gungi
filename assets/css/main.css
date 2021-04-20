@@ -1,3 +1,30 @@
+header {
+    text-align: center;
+}
+
+#connect{
+    display: block;
+}
+
+#username{
+    display: none;
+}
+
+#color{
+    display: none;
+    padding-left: 5%;
+    text-align: center;
+}
+
+#color .color-col{
+    width: 30%;
+    display: inline-block;
+}
+
+#game{
+    display: none;
+}
+
 #board {
     border-collapse: collapse;
     border-spacing: 0;
