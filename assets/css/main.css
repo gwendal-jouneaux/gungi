@@ -2,111 +2,31 @@ header {
     text-align: center;
 }
 
-#connect{
+#connect {
     display: block;
 }
 
-#username{
+#username {
     display: none;
 }
 
-#color{
+#color {
     display: none;
     padding-left: 5%;
     text-align: center;
 }
 
-#color .color-col{
+#color .color-col {
     width: 30%;
     display: inline-block;
 }
 
-#game{
+#game {
     display: none;
 }
 
-#board {
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin: 0px auto;
-    width: 50%;
-    max-width: 80vh !important;
-}
-
-#board td,
-#board th {
-    position: relative;
-    border-color: black;
-    border-style: solid;
-    border-width: 1px;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    overflow: hidden;
-    word-break: normal;
-    width: calc(100% / 10);
-    vertical-align: top;
-}
-
-#board th {
-    padding-top: calc(5% - 12px);
-}
-
-#board th:after {
-    content: "";
-    display: block;
-    padding-bottom: calc(50% + 12px);
-}
-
-#board td .content,
-#board th .content {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-}
-
-#board .ennemy-territory {
-    background-color: #ff000033;
-}
-
-#board .board-numbers {
-    font-size: 16px;
-    font-weight: bold;
-}
-
-#board .neutral-territory {
-    vertical-align: top;
-}
-
-#board .allied-territory {
-    background-color: #34ff3433;
-}
-
-
-div.named-box {
-    position: relative;
-    border: 1px solid black;
-    cursor: default;
-    padding: 10px;
-    margin: 15px 0px;
-}
-
-div.named-box:before {
-    position: absolute;
-    background: white;
-    content: attr(data-legend);
-    left: 8px;
-    top: -13px;
-}
-
-#taken-pieces,
-#remaining-pieces {
-    width: 23%;
-    padding: 1%;
-}
-
-#game .piece {
-    margin-top: 10%;
-    width: 80%;
-    height: 80%;
+#chat {
+    overflow-y: scroll;
+    font-size: 1rem;
+    height: 32vh;
 }

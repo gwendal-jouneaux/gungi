@@ -1,0 +1,150 @@
+#board {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0px auto;
+    width: 50%;
+    max-width: 80vh !important;
+}
+
+#board td,
+#board th {
+    position: relative;
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    word-break: normal;
+    width: calc(100% / 10);
+    vertical-align: top;
+}
+
+#board th {
+    padding-top: calc(5% - 12px);
+}
+
+#board th:after {
+    content: "";
+    display: block;
+    padding-bottom: calc(50% + 12px);
+}
+
+#board td .content,
+#board th .content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+#board .ennemy-territory {
+    background-color: #ff000033;
+}
+
+#board .board-numbers {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#board .neutral-territory {
+    vertical-align: top;
+}
+
+#board .allied-territory {
+    background-color: #34ff3433;
+}
+
+
+#game div.named-box {
+    position: relative;
+    border: 1px solid black;
+    cursor: default;
+    padding: 10px;
+    padding-top: 25px;
+    margin: 15px 0px;
+    font-size: 1.5rem;
+}
+
+#game div.named-box:before {
+    position: absolute;
+    background: white;
+    content: attr(data-legend);
+    left: 8px;
+    top: -13px;
+}
+
+#game div.named-box img.piece {
+    width: 10%;
+}
+
+#taken-pieces {
+    width: 23%;
+    padding-left: 2%;
+}
+
+#remaining-pieces {
+    width: 23%;
+    padding-right: 2%;
+}
+
+#remaining-pieces img.piece:focus {
+    rotate: 180;
+}
+
+#game #board .piece {
+    margin-top: 10%;
+    width: 80%;
+    height: 80%;
+}
+
+#game #board .detailed {
+    position: absolute;
+    z-index: 5;
+    display: none;
+    background-color: #fff;
+    border: 1px solid black;
+    padding: 10px;
+    top: 100%;
+}
+
+#game #board td:hover .detailed {
+    display: block;
+}
+
+#game #board .detailed .piece {
+    margin-top: 0;
+}
+
+#game #board .detailed span {
+    padding-right: 10%;
+}
+
+#game #board .detailed div {
+    margin: 10px 0px;
+}
+
+#game #board td.piece-target {
+    background-color: blue;
+}
+
+#game #gameInfos {
+    display: block;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+#game #gameInfos #checkmate {
+    display: inline-block;
+    width: 33%;
+}
+
+#game #gameInfos #armies {
+    display: inline-block;
+    width: 33%;
+}
+
+#game #gameInfos #phase {
+    display: inline-block;
+    width: 33%;
+}

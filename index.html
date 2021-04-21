@@ -10,30 +10,25 @@
     <meta name="description" content="WebRTC powered game of Gungi(War Council) from the manga Hunter X Hunter">
 
     <!-- Bootstrap & MDB -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.17.0/css/mdb.min.css"
-        integrity="sha256-/SwJ2GDcEt5382i8zqDwl36VJGECxEoIcBIuoLmLR4g=" crossorigin="anonymous" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.17.0/css/mdb.min.css" integrity="sha256-/SwJ2GDcEt5382i8zqDwl36VJGECxEoIcBIuoLmLR4g=" crossorigin="anonymous" />
 
     <!-- Fonts & Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
-        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css"
-        integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css"
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons">
 
     <!-- Styles -->
     <link rel="shortcut icon" href="./assets/img/favicon.ico">
     <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/game.css">
 
     <!-- Open Graph -->
     <meta property="og:site_name" content="Game of Gungi" />
     <meta property="og:type" content="object" />
     <meta property="og:title" content="Game of Gungi" />
     <meta property="og:url" content="TODO" />
-    <meta property="og:description"
-        content="WebRTC powered game of Gungi(War Council) from the manga Hunter X Hunter" />
+    <meta property="og:description" content="WebRTC powered game of Gungi(War Council) from the manga Hunter X Hunter" />
     <meta property="og:image" content="TODO" />
 </head>
 
@@ -98,11 +93,24 @@
         </div>
 
         <div class="row" id="game">
+            <div id="gameInfos">
+                <div id="checkmate" class="named-box" data-legend="Check">
+
+                </div>
+                <div id="armies" class="named-box" data-legend="Size of Army">
+
+                </div>
+                <div id="phase" class="named-box" data-legend="Phase">
+                    <p><b id="phaseName"></b><span></span></p>
+                    <button id="draftEnd">End Draft</button>
+                </div>
+            </div>
+
             <div id="taken-pieces">
-                <div class="named-box" data-legend="Taken pieces (Ennemy)">
+                <div id="otherCaptureBox" class="named-box" data-legend="Taken pieces (Ennemy)">
                     major
                 </div>
-                <div class="named-box" data-legend="Taken pieces (Yours)">
+                <div id="yourCaptureBox" class="named-box" data-legend="Taken pieces (Yours)">
                     major
                 </div>
             </div>
@@ -110,7 +118,7 @@
             <table id="board">
                 <tbody>
                     <tr>
-                        <td></td>
+                        <td id="turnColor"></td>
                         <th class="board-numbers"><span class="content">1</span></th>
                         <th class="board-numbers"><span class="content">2</span></th>
                         <th class="board-numbers"><span class="content">3</span></th>
@@ -123,138 +131,368 @@
                     </tr>
                     <tr>
                         <th class="board-numbers"><span class="content">9</span></th>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                    </tr>
-                    <tr>
-                        <th class="board-numbers"><span class="content">8</span></th>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                    </tr>
-                    <tr>
-                        <th class="board-numbers"><span class="content">7</span></th>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                        <td class="ennemy-territory"></td>
-                    </tr>
-                    <tr>
-                        <th class="board-numbers"><span class="content">6</span></th>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                    </tr>
-                    <tr>
-                        <th class="board-numbers"><span class="content">5</span></th>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                    </tr>
-                    <tr>
-                        <th class="board-numbers"><span class="content">4</span></th>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                        <td class="neutral-territory"></td>
-                    </tr>
-                    <tr>
-                        <th class="board-numbers"><span class="content">3</span></th>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                    </tr>
-                    <tr>
-                        <th class="board-numbers"><span class="content">2</span></th>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                    </tr>
-                    <tr>
-                        <th class="board-numbers"><span class="content">1</span></th>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory">
-                            <div class="content">
-                                <img class="piece" src="./assets/img/0-white.png">
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed">
+                                <img class="piece" src="./assets/img/12-b.png">
+                                <img class="piece" src="./assets/img/5-b.png">
                             </div>
                         </td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
-                        <td class="allied-territory"></td>
+                        <td class="ennemy-territory">
+                            <div class="content"><img class="piece" src="./assets/img/12-b.png"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="board-numbers"><span class="content">8</span></th>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="board-numbers"><span class="content">7</span></th>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="ennemy-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="board-numbers"><span class="content">6</span></th>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="board-numbers"><span class="content">5</span></th>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="board-numbers"><span class="content">4</span></th>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="neutral-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="board-numbers"><span class="content">3</span></th>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="board-numbers"><span class="content">2</span></th>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="board-numbers"><span class="content">1</span></th>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
+                        <td class="allied-territory">
+                            <div class="content"></div>
+                            <div class="detailed"></div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
 
             <div id="remaining-pieces">
-                <div class="named-box" data-legend="Remaining pieces (Ennemy)">
-                    major
+                <div id="otherStockBox" class="named-box" data-legend="Remaining pieces (Ennemy)"></div>
+                <div id="yourStockBox" class="named-box" data-legend="Remaining pieces (Yours)"></div>
+                <div class="named-box" data-legend="Chat">
+                    <div id="chat"></div>
                 </div>
-                <div class="named-box" data-legend="Remaining pieces (Yours)">
-                    &#23567;
-                    &#20013;
-                    &#22823;
-                    &#24339;
-                    &#39340;
-                    &#31570;
-                    &#35584;
-                    &#20365;
-                    &#30758;
-                    &#30770;
-                    &#24525;
-                    &#20853;
-                    &#24101;
-                </div>
+                <input id="msgChat" type="text"><button id="sendChat">Send</button>
             </div>
 
         </div>
@@ -280,6 +518,7 @@
 
 <!-- Load JS -->
 <script src="./assets/js/connectRTC.js"></script>
+<script src="./assets/js/gungi.js"></script>
 <script src="./assets/js/main.js"></script>
 
 </html>

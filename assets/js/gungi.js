@@ -22,7 +22,7 @@
  *
  *----------------------------------------------------------------------------*/
 
- var Gungi = function () {
+var Gungi = function() {
     const BLACK = 'b';
     const WHITE = 'w';
 
@@ -187,7 +187,10 @@
 
     isValidPiece = (piece) => {
         if (typeof piece.piece !== 'undefined') {
-            piece = {type: piece.piece.type, color: piece.piece.color};
+            piece = {
+                type: piece.piece.type,
+                color: piece.piece.color
+            };
         }
 
         return [MAJOR_GENERAL, LIEUTENANT_GENERAL, GENERAL, ARCHER, MUSKETEER, KNIGHT, CAPTAIN, SAMURAI, FORTRESS, SPY, CANNON, PAWN, MARSHALL].includes(piece.type) && [BLACK, WHITE].includes(piece.color);
@@ -215,7 +218,10 @@
         if (tier > 3) {
             return null;
         }
-        board[9 - rank][file - 1][tier - 1] = {type: piece.type, color: piece.color};
+        board[9 - rank][file - 1][tier - 1] = {
+            type: piece.type,
+            color: piece.color
+        };
         return {
             piece: piece,
             tier: tier
@@ -802,7 +808,7 @@
                     case 2:
                         var probes = [];
 
-                        for (var i = 0; i < 4; i++) { 
+                        for (var i = 0; i < 4; i++) {
                             if (!isSquareOutOfBounds(rank - 2, file + 2 - i)) {
                                 probes.push({
                                     rank: rank - 2,
@@ -834,7 +840,7 @@
                     case 3:
                         var probes = [];
 
-                        for (var i = 0; i < 6; i++) { 
+                        for (var i = 0; i < 6; i++) {
                             if (!isSquareOutOfBounds(rank - 3, file + 3 - i)) {
                                 probes.push({
                                     rank: rank - 3,
@@ -1097,7 +1103,13 @@
                     case 2:
                     case 3:
                         var piece_under = get(square)[src.tier - 2];
-                        moves = moves.concat(single_sqaure_move_gen({piece: {type: piece_under.type, color: piece_under.color}, tier: src.tier}, square));
+                        moves = moves.concat(single_sqaure_move_gen({
+                            piece: {
+                                type: piece_under.type,
+                                color: piece_under.color
+                            },
+                            tier: src.tier
+                        }, square));
                         break;
                 }
                 break;
@@ -1518,83 +1530,83 @@
                 }
 
                 var pieces = get_stockpile(BLACK).filter(x => x.amount > 0).map(x => x.piece);
-                    pieces.forEach(piece => {
-                        for (var i = RANK_4; i <= RANK_9; i++) {
-                            for (var j = FILE_1; j <= FILE_9; j++) {
-                                var dest = get_top(i + '-' + j);
+                pieces.forEach(piece => {
+                    for (var i = RANK_4; i <= RANK_9; i++) {
+                        for (var j = FILE_1; j <= FILE_9; j++) {
+                            var dest = get_top(i + '-' + j);
 
-                                if (piece.type == FORTRESS) {
-                                    if (dest == null) { // fortress can't stack on other pieces
-                                        moves.push({
-                                            src: piece,
-                                            dst: i + '-' + j,
-                                            type: PLACE
-                                        });
-                                    }
-                                } else {
-                                    if (dest == null || (dest.tier < 3 && dest.piece.type != MARSHALL)) { // marhsall cannot be stacked on
-                                        if (piece.type == PAWN) {
-                                            var pawns_in_file = board.map(x => x[j - 1]).filter(x => x.some(item => item != null && item.color == BLACK && item.type == PAWN)).length;
-                                            if (pawns_in_file == 0) { // multiple pawns can't be placed in the same file
-                                                moves.push({
-                                                    src: piece,
-                                                    dst: i + '-' + j,
-                                                    type: PLACE
-                                                });
-                                            }
-                                        } else {
+                            if (piece.type == FORTRESS) {
+                                if (dest == null) { // fortress can't stack on other pieces
+                                    moves.push({
+                                        src: piece,
+                                        dst: i + '-' + j,
+                                        type: PLACE
+                                    });
+                                }
+                            } else {
+                                if (dest == null || (dest.tier < 3 && dest.piece.type != MARSHALL)) { // marhsall cannot be stacked on
+                                    if (piece.type == PAWN) {
+                                        var pawns_in_file = board.map(x => x[j - 1]).filter(x => x.some(item => item != null && item.color == BLACK && item.type == PAWN)).length;
+                                        if (pawns_in_file == 0) { // multiple pawns can't be placed in the same file
                                             moves.push({
                                                 src: piece,
                                                 dst: i + '-' + j,
                                                 type: PLACE
                                             });
                                         }
+                                    } else {
+                                        moves.push({
+                                            src: piece,
+                                            dst: i + '-' + j,
+                                            type: PLACE
+                                        });
                                     }
                                 }
                             }
                         }
-                    });
+                    }
+                });
             } else { // white's turn
                 if (army_size.w == 26) { // maximum number of pieces at any time is 26
                     return moves;
                 }
                 var pieces = get_stockpile(WHITE).filter(x => x.amount > 0).map(x => x.piece);
-                    pieces.forEach(piece => {
-                        for (var i = RANK_1; i <= RANK_6; i++) {
-                            for (var j = FILE_1; j <= FILE_9; j++) {
-                                var dest = get_top(i + '-' + j);
+                pieces.forEach(piece => {
+                    for (var i = RANK_1; i <= RANK_6; i++) {
+                        for (var j = FILE_1; j <= FILE_9; j++) {
+                            var dest = get_top(i + '-' + j);
 
-                                if (piece.type == FORTRESS) {
-                                    if (dest == null) { // fortress can't stack on other pieces
-                                        moves.push({
-                                            src: piece,
-                                            dst: i + '-' + j,
-                                            type: PLACE
-                                        });
-                                    }
-                                } else {
-                                    if (dest == null || (dest.tier < 3 && dest.piece.type != MARSHALL)) { // marhsall cannot be stacked on
-                                        if (piece.type == PAWN) {
-                                            var pawns_in_file = board.map(x => x[j - 1]).filter(x => x.some(item => item != null && item.color == WHITE && item.type == PAWN)).length;
-                                            if (pawns_in_file == 0) { // multiple pawns can't be placed in the same file
-                                                moves.push({
-                                                    src: piece,
-                                                    dst: i + '-' + j,
-                                                    type: PLACE
-                                                });
-                                            }
-                                        } else {
+                            if (piece.type == FORTRESS) {
+                                if (dest == null) { // fortress can't stack on other pieces
+                                    moves.push({
+                                        src: piece,
+                                        dst: i + '-' + j,
+                                        type: PLACE
+                                    });
+                                }
+                            } else {
+                                if (dest == null || (dest.tier < 3 && dest.piece.type != MARSHALL)) { // marhsall cannot be stacked on
+                                    if (piece.type == PAWN) {
+                                        var pawns_in_file = board.map(x => x[j - 1]).filter(x => x.some(item => item != null && item.color == WHITE && item.type == PAWN)).length;
+                                        if (pawns_in_file == 0) { // multiple pawns can't be placed in the same file
                                             moves.push({
                                                 src: piece,
                                                 dst: i + '-' + j,
                                                 type: PLACE
                                             });
                                         }
+                                    } else {
+                                        moves.push({
+                                            src: piece,
+                                            dst: i + '-' + j,
+                                            type: PLACE
+                                        });
                                     }
                                 }
                             }
                         }
-                    });
+                    }
+                });
             }
         }
 
@@ -1603,7 +1615,7 @@
 
     moves = (options) => {
         var moves = [];
-        
+
         if (phase == GAME) {
             for (var i = RANK_1; i <= RANK_9; i++) {
                 for (var j = FILE_1; j <= FILE_9; j++) {
@@ -1622,7 +1634,7 @@
         var temp_board = JSON.stringify(board);
         for (var i = moves.length - 1; i >= 0; i--) {
             var move = moves[i];
-            
+
             switch (move.type) {
                 case MOVEMENT:
                     var piece = remove(move.src);
@@ -1636,7 +1648,7 @@
                     break;
                 case ATTACK:
                     var piece = remove(move.dst);
-    
+
                     if (get_top(move.dst) == null) {
                         var temp = remove(move.src);
                         put(temp, move.dst);
@@ -1672,7 +1684,7 @@
             if (in_check()) {
                 moves.splice(i, 1);
             }
-            
+
             board = JSON.parse(temp_board);
         }
 
@@ -1700,10 +1712,13 @@
             var source_piece = typeof legal_move.src === 'string' ? get_top(legal_move.src) : null;
             var destination_piece = null;
 
-            if (typeof legal_move.dst === 'string'){
+            if (typeof legal_move.dst === 'string') {
                 destination_piece = get_top(legal_move.dst);
                 if (destination_piece == null) {
-                    destination_piece = {piece: null, tier: 1}
+                    destination_piece = {
+                        piece: null,
+                        tier: 1
+                    }
                 }
             }
 
@@ -1714,12 +1729,12 @@
                     break;
                 case PLACE:
                     remove_stockpile(legal_move.src);
-                    
+
                     put({
                         type: legal_move.src.type,
                         color: legal_move.src.color
                     }, legal_move.dst);
-    
+
                     if (legal_move.src.color == BLACK) {
                         army_size.b++;
                         if (legal_move.src.type == MARSHALL) {
@@ -1734,14 +1749,17 @@
                     break;
                 case ATTACK:
                     var piece = remove(legal_move.dst);
-    
+
                     var c = captured.filter(x => JSON.stringify(x.piece) === JSON.stringify(piece));
                     if (c.length > 0) {
                         c[0].amount++;
                     } else {
-                        captured.push({piece: piece, amount: 1});
+                        captured.push({
+                            piece: piece,
+                            amount: 1
+                        });
                     }
-    
+
                     if (get_top(legal_move.dst) == null) {
                         var temp = remove(legal_move.src);
                         put(temp, legal_move.dst);
@@ -1761,13 +1779,13 @@
                     if (drafted.w ^ drafted.b) {
                         half_moves++;
                     }
-                    if (drafted.w == 1 &&  drafted.b == 1) {
+                    if (drafted.w == 1 && drafted.b == 1) {
                         half_moves--;
                     }
                     break;
             }
 
-            if (drafted.w == drafted.b || (history.length > 0  && history[history.length-1].type == 'ready')) {
+            if (drafted.w == drafted.b || (history.length > 0 && history[history.length - 1].type == 'ready')) {
                 half_moves++;
             }
 
@@ -1878,60 +1896,64 @@
         /***************************************************************************
          * PUBLIC API
          **************************************************************************/
-        ascii: function () {
+        ascii: function() {
             return ascii()
         },
-        get: function (square) {
+        get: function(square) {
             return get(square);
         },
-        get_top: function (square) {
+        get_top: function(square) {
             return get_top(square);
         },
-        stockpile: function (color) {
+        stockpile: function(color) {
             return get_stockpile(color);
         },
-        board: function () {
+        board: function() {
             return board;
         },
-        history: function () {
+        history: function() {
             return history;
         },
-        turn: function () {
+        turn: function() {
             return turn;
         },
-        phase: function () {
+        phase: function() {
             return phase;
         },
-        captured: function (color) {
+        captured: function(color) {
             return get_captured(color);
         },
-        game_over: function () {
+        game_over: function() {
             return game_over();
         },
-        pgn: function () {
+        pgn: function() {
             return pgn();
         },
-        in_checkmate: function () {
+        in_checkmate: function() {
             return in_checkmate();
         },
-        in_check: function () {
+        in_check: function() {
             return in_check();
         },
-        in_stalemate: function () {
+        in_stalemate: function() {
             return in_stalemate();
         },
-        moves: function (options) {
+        moves: function(options) {
             return moves(options);
         },
-        move: function (player_move) {
+        move: function(player_move) {
             return move(player_move);
         },
     }
 }
 
+if (window) {
+    window.Gungi = Gungi
+}
+
 if (typeof exports !== 'undefined') exports.Gungi = Gungi;
 /* export Gungi object for any RequireJS compatible environment */
 if (typeof define !== 'undefined')
-    define(function () {
+    define(function() {
         return Gungi;
     })
