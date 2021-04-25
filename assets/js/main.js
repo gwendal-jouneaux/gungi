@@ -318,31 +318,37 @@ window.onload = function() {
             updateGame();
         }
     });
+
+    $("#game #board td").hover(function() {
+        let detail = $(this).find(".detailed")
+        let empty = detail.get()[0].children.length == 0;
+        if(! empty){
+            detail.css("display", "block");
+        }
+    }, function () {
+        $(this).find(".detailed").css("display", "none")
+    });
 }
 
 function selectPiece(elem, location) {
-    if (window.selectedPiece == elem) {
+    if (elem.hasClass("piece-selection")) {
         unselectAll()
         return;
     }
-    if (window.selectedPiece) {
-        window.selectedPiece.css("background-color", window.selectedPieceBg);
-        cleanPossibleMoves()
-    }
-    window.selectedPiece = elem;
-    window.selectedPieceBg = window.selectedPiece.css("background-color");
-    window.selectedPiece.css("background-color", "deepskyblue");
+    $(".piece-selection").removeClass("piece-selection");
+    elem.addClass("piece-selection");
+    cleanPossibleMoves();
 
     window.possibleMoves = []
     switch (location) {
         case "BOARD":
             possibleMoves = gungi.moves({
-                square: window.selectedPiece.attr("id")
+                square: elem.attr("id")
             });
             break;
         case "STOCK":
             possibleMoves = gungi.moves({
-                stock_piece: window.selectedPiece.attr("data")
+                stock_piece: elem.attr("data")
             });
             break;
     }
@@ -360,8 +366,7 @@ function cleanPossibleMoves() {
 }
 
 function unselectAll() {
-    window.selectedPiece.css("background-color", window.selectedPieceBg);
-    window.selectedPiece = null;
+    $(".piece-selection").removeClass("piece-selection");
     cleanPossibleMoves()
 }
 
