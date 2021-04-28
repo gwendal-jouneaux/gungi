@@ -114,18 +114,18 @@
 }
 
 #game #board .detailed span {
-    padding-right: 10%;
+    padding-right: 5%;
 }
 
 #game #board .detailed div {
-    margin: 10px 0px;
+    margin: 5px 0px;
 }
 
 #game .piece-selection {
     background-color: deepskyblue;
 }
 
-#game #board td.piece-target .content{
+#game #board td.piece-target .content {
     background-color: blue;
 }
 
@@ -149,4 +149,8 @@
 #game #gameInfos #phase {
     display: inline-block;
     width: 33%;
+}
+
+#game #actionChooserTrigger {
+    display: none;
 }

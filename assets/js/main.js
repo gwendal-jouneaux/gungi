@@ -120,8 +120,8 @@ function updateGame() {
     checkmate.innerHTML += "<p>Checkmate : <b>" + gungi.in_checkmate() + "</b></p>";
     checkmate.innerHTML += "<p>Stalemate : <b>" + gungi.in_stalemate() + "</b></p>";
 
-    armies.innerHTML = "<p>Your Army : <b>" + (38 - yourCapture.length - yourStock.length) + "</b></p>";
-    armies.innerHTML += "<p>Other Army : <b>" + (38 - otherCapture.length - otherStock.length) + "</b></p>";
+    armies.innerHTML = "<p>Your Army : <b>" + (38 - yourCaptureBox.children.length - yourStockBox.children.length) + "</b></p>";
+    armies.innerHTML += "<p>Other Army : <b>" + (38 - otherCaptureBox.children.length - otherStockBox.children.length) + "</b></p>";
 
     $("#phase b").html(gungi.phase())
     if (other.endedDraft) {
@@ -298,34 +298,70 @@ window.onload = function() {
     }
 
     $("#board").on("click", "td:not(.piece-target)", function() {
-        selectPiece($(this), "BOARD")
+        if (gungi.turn() == you.color) {
+            selectPiece($(this), "BOARD")
+        }
     });
 
     $("#yourStockBox").on("click", "img.piece", function() {
-        selectPiece($(this), "STOCK")
+        if (gungi.turn() == you.color) {
+            selectPiece($(this), "STOCK")
+        }
     });
 
     $("#board").on("click", ".piece-target", function() {
-        let i = $(this).attr("move-index");
-        let move = window.possibleMoves[i];
-        let worked = gungi.move(move);
-        if (worked) {
-            let data = {};
-            data.type = "PLAY";
-            data.move = move;
-            sendJSON(data);
-            unselectAll()
-            updateGame();
+        if (gungi.turn() == you.color) {
+            let moveIndex = $(this).attr("move-index");
+            let attackIndex = $(this).attr("attack-index");
+            if (moveIndex && attackIndex) {
+                attack.onclick = function() {
+                    let move = window.possibleMoves[attackIndex];
+                    let worked = gungi.move(move);
+                    if (worked) {
+                        let data = {};
+                        data.type = "PLAY";
+                        data.move = move;
+                        sendJSON(data);
+                        unselectAll()
+                        updateGame();
+                    }
+                }
+                stack.onclick = function() {
+                    let move = window.possibleMoves[moveIndex];
+                    let worked = gungi.move(move);
+                    if (worked) {
+                        let data = {};
+                        data.type = "PLAY";
+                        data.move = move;
+                        sendJSON(data);
+                        unselectAll()
+                        updateGame();
+                    }
+                }
+                $("#actionChooserTrigger").click();
+                return;
+            }
+            let move = window.possibleMoves[moveIndex ? moveIndex : attackIndex];
+            let worked = gungi.move(move);
+            if (worked) {
+                let data = {};
+                data.type = "PLAY";
+                data.move = move;
+                sendJSON(data);
+                unselectAll()
+                updateGame();
+            }
+
         }
     });
 
     $("#game #board td").hover(function() {
         let detail = $(this).find(".detailed")
         let empty = detail.get()[0].children.length == 0;
-        if(! empty){
+        if (!empty) {
             detail.css("display", "block");
         }
-    }, function () {
+    }, function() {
         $(this).find(".detailed").css("display", "none")
     });
 }
@@ -356,13 +392,28 @@ function selectPiece(elem, location) {
         const move = possibleMoves[i];
         if (move.dst) {
             $("#" + move.dst).addClass("piece-target");
-            $("#" + move.dst).attr("move-index", i);
+            switch (move.type) {
+                case gungi.MOVEMENT:
+                    $("#" + move.dst).attr("move-index", i);
+                    break;
+                case gungi.PLACE:
+                    $("#" + move.dst).attr("move-index", i);
+                    break;
+                case gungi.STACK:
+                    $("#" + move.dst).attr("move-index", i);
+                    break;
+                case gungi.ATTACK:
+                    $("#" + move.dst).attr("attack-index", i);
+                    break;
+            }
         }
     }
 }
 
 function cleanPossibleMoves() {
     $(".piece-target").removeClass("piece-target");
+    $("[move-index]").removeAttr("move-index")
+    $("[attack-index]").removeAttr("attack-index")
 }
 
 function unselectAll() {
