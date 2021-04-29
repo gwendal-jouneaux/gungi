@@ -1749,7 +1749,7 @@ var Gungi = function() {
                     break;
                 case ATTACK:
                     var piece = remove(legal_move.dst);
-
+                    army_size[piece.color]--;
                     var c = captured.filter(x => JSON.stringify(x.piece) === JSON.stringify(piece));
                     if (c.length > 0) {
                         c[0].amount++;

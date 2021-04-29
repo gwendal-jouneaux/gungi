@@ -116,20 +116,30 @@ function updateGame() {
 
     draftEnd.disable = gungi.turn() == other.color;
 
-    checkmate.innerHTML = "<p>Check : <b>" + gungi.in_check() + "</b></p>";
-    checkmate.innerHTML += "<p>Checkmate : <b>" + gungi.in_checkmate() + "</b></p>";
-    checkmate.innerHTML += "<p>Stalemate : <b>" + gungi.in_stalemate() + "</b></p>";
+    let playingName = gungi.turn() == you.color ? you.name : other.name;
+    if (gungi.in_stalemate()) {
+        alert(playingName + " is in Stalemate");
+    }
+    if (gungi.in_checkmate()) {
+        alert(playingName + " is in Checkmate");
+    } else if (gungi.in_check()) {
+        alert(playingName + " is in Check");
+    }
 
-    armies.innerHTML = "<p>Your Army : <b>" + (38 - yourCaptureBox.children.length - yourStockBox.children.length) + "</b></p>";
-    armies.innerHTML += "<p>Other Army : <b>" + (38 - otherCaptureBox.children.length - otherStockBox.children.length) + "</b></p>";
+    armies.innerHTML = "<p>Your Army : <b>" + (38 - yourCaptureBox.children.length - yourStockBox.children.length) + " / 26</b></p>";
+    armies.innerHTML += "<p>Other Army : <b>" + (38 - otherCaptureBox.children.length - otherStockBox.children.length) + " / 26</b></p>";
 
-    $("#phase b").html(gungi.phase())
-    if (other.endedDraft) {
-        if (you.endedDraft) {
-            $("#phase span").html("");
-        } else {
-            $("#phase span").html(`(${other.name} is waiting)`);
-        }
+    if (gungi.phase() == "draft") {
+        $("#phase-draft").show()
+        $("#phase-game").hide()
+    } else {
+        $("#phase-draft").hide()
+        $("#phase-game").show()
+    }
+    if (other.endedDraft != you.endedDraft) {
+        $("#phase-wait").show();
+    } else {
+        $("#phase-wait").hide();
     }
 
     let ranks = gungi.board();
@@ -186,6 +196,13 @@ function receiveMessage(e) {
         case "PLAY":
             let move = data.move;
             gungi.move(move);
+            updateGame();
+            break;
+
+        case "DRAFT":
+            other.endedDraft = true;
+            let ready = data.move;
+            gungi.move(ready);
             updateGame();
             break;
 
@@ -281,7 +298,7 @@ window.onload = function() {
     draftEnd.onclick = function() {
         if (gungi.turn() == you.color) {
             let data = {};
-            data.type = "PLAY";
+            data.type = "DRAFT";
             data.move = {
                 src: null,
                 dst: null,
@@ -290,7 +307,7 @@ window.onload = function() {
             let worked = gungi.move(data.move);
             if (worked) {
                 you.endedDraft = true;
-                draftEnd.disabled = true;
+                draftEnd.style.display = "none";
                 sendJSON(data);
                 updateGame()
             }

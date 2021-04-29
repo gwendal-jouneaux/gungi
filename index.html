@@ -93,20 +93,13 @@
         </div>
 
         <div class="row" id="game">
-            <div id="gameInfos">
-                <div id="checkmate" class="named-box" data-legend="Check">
-
-                </div>
-                <div id="armies" class="named-box" data-legend="Size of Army">
-
-                </div>
-                <div id="phase" class="named-box" data-legend="Phase">
-                    <p><b id="phaseName"></b><span></span></p>
-                    <button class="btn" id="draftEnd">End Draft</button>
-                </div>
-            </div>
-
             <div id="taken-pieces">
+                <div class="named-box" data-legend="Chat">
+                    <div id="chat"></div>
+                    <input id="msgChat" type="text">
+                    <button class="btn btn-block btn-primary" id="sendChat">Send</button>
+                </div>
+
                 <div id="otherCaptureBox" class="named-box" data-legend="Taken pieces (Ennemy)"></div>
                 <div id="yourCaptureBox" class="named-box" data-legend="Taken pieces (Yours)"></div>
             </div>
@@ -480,12 +473,15 @@
             </table>
 
             <div id="remaining-pieces">
+                <div id="phase" class="named-box" data-legend="Phase">
+                    <span class="badge badge-danger" id="phase-draft">Draft</span>
+                    <span class="badge badge-success" id="phase-game">Game</span>
+                    <span class="badge badge-secondary" id="phase-wait">Waiting draft end</span>
+                    <button class="btn btn-sm btn-primary" id="draftEnd">End Draft</button>
+                </div>
+                <div id="armies" class="named-box" data-legend="Size of Armies"></div>
                 <div id="otherStockBox" class="named-box" data-legend="Remaining pieces (Ennemy)"></div>
                 <div id="yourStockBox" class="named-box" data-legend="Remaining pieces (Yours)"></div>
-                <div class="named-box" data-legend="Chat">
-                    <div id="chat"></div>
-                </div>
-                <input id="msgChat" type="text"><button class="btn" id="sendChat">Send</button>
             </div>
 
             <!-- Button trigger modal -->
@@ -524,7 +520,8 @@
         <div class="container mt-0">
             © Copyright 2021 Gwendal Jouneaux.
             Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-            Last updated: April XX, 2021.
+            Rules available <a href="./assets/rules/Gungi.pdf" target="_blank">here</a>
+            Last updated: April 29, 2021.
         </div>
     </footer>
 
@@ -532,7 +529,7 @@
 
 </body>
 
-<!-- Load jQuery -->
+<!-- Load Libs -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
